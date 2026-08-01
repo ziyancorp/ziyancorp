@@ -1,114 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZYN AI Corp — Demo Luminous + Partikel</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Outfit', sans-serif;
-    background:#0c0c0d; color:#e2e8f0; overflow-x:hidden;
-    min-height:100vh; position:relative;
-  }
-  /* Gradient bergerak (animated gradient background) */
-  .gradient-bg {
-    position:fixed; inset:0; z-index:0;
-    background: linear-gradient(120deg, #1e3a8a, #6d28d9, #047857, #1e3a8a);
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease infinite;
-    opacity:0.25;
-  }
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  /* Blob blur (luminous ambient) */
-  .blob { position:fixed; border-radius:50%; filter:blur(120px); z-index:1; opacity:0.4; }
-  .blob.b1 { top:-10%; left:-10%; width:50%; height:50%; background:#3b82f6; animation: float1 10s ease-in-out infinite; }
-  .blob.b2 { top:20%; right:-10%; width:40%; height:40%; background:#a855f7; animation: float2 14s ease-in-out infinite; }
-  @keyframes float1 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(30px,40px);} }
-  @keyframes float2 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-40px,20px);} }
-
-  /* Canvas partikel */
-  #particles { position:fixed; inset:0; z-index:2; }
-
-  /* Konten demo */
-  .content { position:relative; z-index:3; max-width:800px; margin:0 auto; padding:80px 20px; text-align:center; }
-  h1 { font-size:3.5rem; font-weight:300; letter-spacing:-0.02em; }
-  h1 span {
-    font-weight:600;
-    background:linear-gradient(90deg,#60a5fa,#a855f7);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 0 30px rgba(168,85,247,0.5);
-  }
-  .glow-box {
-    margin-top:40px; padding:30px; border-radius:24px;
-    background:rgba(255,255,255,0.05); backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 0 40px rgba(59,130,246,0.3);
-    transition:box-shadow 0.4s;
-  }
-  .glow-box:hover { box-shadow:0 0 60px rgba(168,85,247,0.5); }
-  .btn {
-    margin-top:24px; display:inline-block; padding:14px 32px; border-radius:999px;
-    background:#fff; color:#0c0c0d; font-weight:600; cursor:pointer;
-    box-shadow:0 0 20px rgba(59,130,246,0.8); transition:all 0.3s;
-  }
-  .btn:hover { box-shadow:0 0 30px rgba(168,85,247,0.9); transform:translateY(-2px); }
-  p.sub { margin-top:20px; color:#94a3b8; font-weight:300; }
-</style>
-</head>
-<body>
-  <div class="gradient-bg"></div>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <canvas id="particles"></canvas>
-
-  <div class="content">
-    <h1>Kecerdasan untuk<br><span>Eksekusi Bisnis.</span></h1>
-    <p class="sub">Demo: animated gradient + luminous blobs + particle canvas (ala ZYN AI Corp)</p>
-    <div class="glow-box">
-      <p>Ini contoh kartu dengan glow effect. Hover untuk lihat intensitas berubah.</p>
-    </div>
-    <div class="btn">Mulai Analisis</div>
-  </div>
-
-<script>
-// Partikel sederhana
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let w, h, particles;
-function init() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-  particles = [];
-  for (let i=0; i<80; i++) {
-    particles.push({
-      x: Math.random()*w, y: Math.random()*h,
-      r: Math.random()*2+0.5,
-      dx: (Math.random()-0.5)*0.5, dy: (Math.random()-0.5)*0.5,
-      a: Math.random()*0.5+0.2
-    });
-  }
-}
-function draw() {
-  ctx.clearRect(0,0,w,h);
-  particles.forEach(p => {
-    p.x += p.dx; p.y += p.dy;
-    if (p.x<0||p.x>w) p.dx*=-1;
-    if (p.y<0||p.y>h) p.dy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(147,197,253,${p.a})`;
-    ctx.shadowBlur = 8; ctx.shadowColor = '#60a5fa';
-    ctx.fill();
-  });
-  requestAnimationFrame(draw);
-}
-init(); draw();
-window.addEventListener('resize', init);
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZYN AI Corp. — Kecerdasan Buatan untuk Pertumbuhan</title>
+    <meta name="description" content="ZYN AI Corp. - perusahaan AI yang dijalankan sepenuhnya oleh agent. Solusi investasi, bisnis, dan analisis pasar berbasis AI." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
