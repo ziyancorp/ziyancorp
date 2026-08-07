@@ -4,7 +4,7 @@ import {
  Menu, X, Sparkles, Sun, Moon, Monitor,
  BarChart2, ShieldCheck, Zap, ChevronRight, Send,
  PieChart, TrendingUp, Briefcase, Activity, Hexagon,
- Globe, Layers
+ Globe, Layers, Search, Bot, Target, CheckCircle2
 } from 'lucide-react';
 
 // --- KOMPONEN PARTIKEL RINGAN ---
@@ -179,6 +179,8 @@ AI</a>
              <a href="#kalkulator" className="font-outfit text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all duration-300">Kalkulator
 ROI</a>
 
+             <a href="#job-hunter" className="font-outfit text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-all duration-300">Job Hunter</a>
+
            </div>
 
            <div className="hidden md:flex items-center gap-4 relative z-10">
@@ -227,6 +229,9 @@ AI</a>
 
              <a onClick={() => setIsMenuOpen(false)} href="#kalkulator"
 className="font-outfit text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-500">Kalkulator ROI</a>
+
+             <a onClick={() => setIsMenuOpen(false)} href="#job-hunter"
+className="font-outfit text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-500">Job Hunter</a>
 
            </div>
            <button className="font-outfit w-full mt-4 px-5 py-3 text-sm font-medium bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] animate-gradient-xy">
@@ -466,6 +471,70 @@ flex-1 ${activeTab === 'pasar' ? 'border-b-2 border-emerald-500 text-emerald-600
             >
               Hubungi Kami <ChevronRight className="w-4 h-4" />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* JOB HUNTER — Layanan Cari Kerja Otomatis */}
+      <section id="job-hunter" className="py-24 px-4 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-5">
+              <Bot className="w-4 h-4 text-blue-500" />
+              <span className="font-outfit text-xs font-medium text-blue-600 dark:text-blue-400 tracking-wide">AI JOB HUNTER</span>
+            </div>
+            <h2 className="font-outfit text-3xl sm:text-5xl font-light tracking-tighter text-slate-900 dark:text-white mb-4">
+              Capek kirim lamaran <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">tiap hari?</span>
+            </h2>
+            <p className="font-outfit text-lg font-light text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Tim agent AI kami memantau puluhan job board 24/7, filter yang cocok buat profilmu, dan kirim rekomendasi kerja langsung ke WhatsApp/Telegram kamu. Tanpa ribet.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-14">
+            {[
+              { icon: Search, title: 'Pemindaian 24/7', desc: 'Agent Scout memantau LinkedIn, Indeed, Jobstreet & board lain secara otomatis tiap hari.' },
+              { icon: Target, title: 'Filter Cerdas', desc: 'AI Scorer mencocokkan lowongan dengan CV kamu, cuma kirim yang relevan (skor ≥ 80%).' },
+              { icon: Send, title: 'Kirim ke HP', desc: 'Lowongan + link lamaran + tips lolos seleksi dikirim ke WhatsApp/Telegram kamu.' },
+            ].map((f, idx) => (
+              <div key={idx} className="bg-white/90 dark:bg-[#131314]/90 backdrop-blur-xl p-8 rounded-2xl border border-slate-200 dark:border-white/5 hover:border-blue-500/40 hover:shadow-[0_0_40px_rgba(59,130,246,0.12)] transition-all duration-500">
+                <f.icon className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-5 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                <h3 className="font-outfit text-xl font-medium text-slate-900 dark:text-white mb-3">{f.title}</h3>
+                <p className="font-outfit text-sm font-light text-slate-600 dark:text-slate-400 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white/90 dark:bg-[#18181a]/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2rem] p-10 sm:p-14">
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div>
+                <h3 className="font-outfit text-2xl font-light text-slate-900 dark:text-white mb-5">Paket Berlangganan</h3>
+                <ul className="space-y-3">
+                  {[
+                    'Pantauan job board harian otomatis',
+                    'Filter AI cocok dengan CV kamu',
+                    'Laporan mingguan via WhatsApp/Telegram',
+                    'Tips & kata kunci lolos ATS (screening)',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 font-outfit text-sm font-light text-slate-600 dark:text-slate-300">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500/10 to-emerald-500/10 rounded-2xl p-8 border border-blue-500/20 text-center">
+                <p className="font-outfit text-sm text-slate-500 dark:text-slate-400 mb-1">Mulai dari</p>
+                <p className="font-outfit text-4xl font-semibold text-slate-900 dark:text-white mb-1">Rp99.000<span className="text-base font-light">/bln</span></p>
+                <p className="font-outfit text-xs text-slate-500 dark:text-slate-400 mb-6">Cancel kapan saja</p>
+                <a
+                  href="https://wa.me/6281234567890?text=Halo%20ZIYAN%2C%20saya%20mau%20coba%20layanan%20AI%20Job%20Hunter"
+                  className="font-outfit inline-flex items-center justify-center gap-2 w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-full font-medium hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] transition-all duration-300"
+                >
+                  Daftar Sekarang <ChevronRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
