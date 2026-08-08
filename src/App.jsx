@@ -528,7 +528,7 @@ flex-1 ${activeTab === 'pasar' ? 'border-b-2 border-emerald-500 text-emerald-600
                 <p className="font-outfit text-4xl font-semibold text-slate-900 dark:text-white mb-1">Rp99.000<span className="text-base font-light">/bln</span></p>
                 <p className="font-outfit text-xs text-slate-500 dark:text-slate-400 mb-6">Cancel kapan saja</p>
                 <a
-                  href="https://wa.me/6281234567890?text=Halo%20ZIYAN%2C%20saya%20mau%20coba%20layanan%20AI%20Job%20Hunter"
+                  href="https://t.me/Employeezynbot"
                   className="font-outfit inline-flex items-center justify-center gap-2 w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-full font-medium hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] transition-all duration-300"
                 >
                   Daftar Sekarang <ChevronRight className="w-4 h-4" />
@@ -536,6 +536,32 @@ flex-1 ${activeTab === 'pasar' ? 'border-b-2 border-emerald-500 text-emerald-600
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* TEMPLATES - ASET SIAP PAKAI */}
+      <section id="templates" className="py-20 px-4 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-outfit text-3xl sm:text-4xl font-medium text-slate-900 dark:text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]">Template Siap Pakai</h2>
+            <p className="font-outfit text-slate-500 dark:text-slate-400 mt-3">Otomasi ZIYAN yang sudah berjalan — tinggal isi token, langsung jalan.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { t: 'Auto-Affiliate Kit', d: 'Kirim video/foto + link Shopee ke Telegram → auto post FB + YT + X tiap 67 mnt. Sinkron Google Sheet.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/affiliate/scheduler.py' },
+              { t: 'AI CS Bot Kit', d: 'Bot Telegram jawab otomatis (sales/closing), log keluhan ke CSV. Pakai 9router kr/auto.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/cs_bot/ziyan_corp_cs_bot.py' },
+              { t: 'Job Hunter Kit', d: 'Workflow n8n cari lowongan via JSearch, filter skor, kirim ke Telegram. Siap import.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/job_hunter/ziyan_job_hunter.json' },
+            ].map((x, i) => (
+              <div key={i} className="bg-white/90 dark:bg-[#131314]/90 backdrop-blur-xl p-6 rounded-2xl border border-slate-200 dark:border-white/5 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] transition-all duration-500 flex flex-col">
+                <h3 className="font-outfit text-lg font-medium text-slate-900 dark:text-white mb-2">{x.t}</h3>
+                <p className="font-outfit text-sm font-light text-slate-600 dark:text-slate-400 leading-relaxed mb-4 flex-1">{x.d}</p>
+                <a href={x.l} className="font-outfit inline-flex items-center justify-center gap-2 w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-full font-medium text-sm hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300">
+                  Ambil Template <ChevronRight className="w-4 h-4" />
+                </a>
+              </div>
+            ))}
+          </div>
+          <p className="font-outfit text-center text-xs text-slate-400 dark:text-slate-500 mt-8">Butuh setup/integrasi? Chat <a href="https://t.me/Employeezynbot" className="text-blue-500 underline">@Employeezynbot</a></p>
         </div>
       </section>
 
