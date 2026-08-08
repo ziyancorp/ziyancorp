@@ -548,7 +548,8 @@ flex-1 ${activeTab === 'pasar' ? 'border-b-2 border-emerald-500 text-emerald-600
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { t: 'Auto-Affiliate Kit', d: 'Kirim video/foto + link Shopee ke Telegram → auto post FB + YT + X tiap 67 mnt. Sinkron Google Sheet.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/affiliate/scheduler.py' },
+              { t: 'Auto-Affiliate v1 (Mode Langsung)', d: '1 file+1 link ke Telegram → post FB+YT+X tiap 77 mnt. Kontrol manual, simpel.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/affiliate/scheduler_v1_legacy.py' },
+              { t: 'Auto-Affiliate v2 (Mode Sheet)', d: 'Kirim banyak → masuk Google Sheet → sync 53 mnt → publish 67 mnt. Anti-spam, terpusat.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/affiliate/scheduler.py' },
               { t: 'AI CS Bot Kit', d: 'Bot Telegram jawab otomatis (sales/closing), log keluhan ke CSV. Pakai 9router kr/auto.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/cs_bot/ziyan_corp_cs_bot.py' },
               { t: 'Job Hunter Kit', d: 'Workflow n8n cari lowongan via JSearch, filter skor, kirim ke Telegram. Siap import.', l: 'https://raw.githubusercontent.com/yangmulia96/ziyancorp/main/ZIYAN_TEMPLATES/job_hunter/ziyan_job_hunter.json' },
             ].map((x, i) => (
