@@ -212,4 +212,40 @@ rows = gw.sheets.spreadsheets().values().get(
 
 ---
 
-*Dokumentasi dibuat oleh Hermes — 16 Agustus 2026, 16:00 WIB*
+## 11. DISTRIBUTION AGENT — 16 Agustus 2026 (Malam)
+
+**Status:** ✅ 4 PLATFORM LIVE + CRON AKTIF
+
+### Yang dibangun
+- `distribute_agent.py` — orchestrator: ambil produk pending → baca AFFILIATE.json → post 4 platform → mark PUBLISHED
+- `distributor.py` — engine post (FB/IG/Threads/YT)
+- `youtube_upload_celine.py` — upload YT (scope youtube.upload)
+- `run_distribute.sh` — wrapper cron (env dari vault)
+- `threads_reauth.py` — re-auth Threads terpisah
+
+### Fakta Token (TERVERIFIKASI API)
+| Token | State | Endpoint |
+|---|---|---|
+| fb_page_token | ✅ VALID | graph.facebook.com |
+| threads_user_token | ✅ VALID | graph.threads.net (App 1346767533487099) |
+| instagram_user_token | ✅ VALID | graph.instagram.com (IG_BIZ 17841444876830769) |
+| token_celine.json | ✅ VALID | youtube.upload (UC0h3xyafx6P6J_CjpzhpSeg) |
+| META_USER_TOKEN | ❌ DIHAPUS | expired, jangan pakai |
+
+### Cron
+- Job `ziyan-distribute-4x` (d9ee27fe41c3)
+- Schedule: `57 8,12,16,20 * * *` (08:57, 12:34, 16:08, 20:13 WIB)
+- Logic: `get_pending_product()` ambil 1 produk belum PUBLISHED → post → mark
+
+### Pitfalls Terbukti
+1. IG token di `graph.facebook.com` → "Cannot parse". Pakai `graph.instagram.com`.
+2. IG image_url harus publik (FB CDN). Drive URL gak di-fetch.
+3. YT title max 95 char (limit YT 100).
+4. Threads text-only.
+5. Jangan `fb_reauth.py` buat Threads.
+
+### Test Live (16/8 23:00)
+- Produk `PROD-20260816-260F26`: FB ✅ IG ✅ Threads ✅ YT ✅ (`youtu.be/4g6kHugMdQ4`)
+- Produk `PROD-20260815-2652CC`: sukses via run_distribute.sh + mark PUBLISHED
+
+*Update oleh Hermes — 16 Agustus 2026, 23:30 WIB*
