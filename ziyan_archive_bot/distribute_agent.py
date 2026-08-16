@@ -186,16 +186,20 @@ def main():
 
     fb_page_id = os.environ.get("FB_PAGE_ID", "975723622288353")
     fb_token = os.environ.get("FB_PAGE_TOKEN", "")
-    meta_token = os.environ.get("META_USER_TOKEN", fb_token)
-    threads_token = os.environ.get("THREADS_USER_TOKEN", meta_token)
+    # Threads: pakai THREADS_USER_TOKEN (valid), BUKAN META_USER_TOKEN (expired)
+    threads_token = os.environ.get("THREADS_USER_TOKEN", "")
+    # IG: butuh token IG terpisah (instagram_token expired) -> skip kalau gak ada
+    ig_token = os.environ.get("INSTAGRAM_USER_TOKEN", "")
     ig_id = os.environ.get("IG_BUSINESS_ID", "17841444876830769")
 
     results = {}
     # Facebook (publik)
     results["facebook"] = post_facebook(caption, fb_page_id, fb_token)
-    # Instagram (butuh image_url publik)
-    if img_url:
-        results["instagram"] = post_instagram(caption, img_url, ig_id, meta_token)
+    # Instagram (butuh image_url publik + token IG valid)
+    if img_url and ig_token:
+        results["instagram"] = post_instagram(caption, img_url, ig_id, ig_token)
+    elif not ig_token:
+        results["instagram"] = {"status":"skipped","reason":"no_ig_token"}
     else:
         results["instagram"] = {"status":"skipped","reason":"no_image"}
     # YouTube (publik, video asli)
@@ -203,11 +207,8 @@ def main():
         results["youtube"] = post_youtube_public(prod["title"], caption, video_local)
     else:
         results["youtube"] = {"status":"skipped","reason":"no_video"}
-    # Threads (publik)
-    if img_url:
-        results["threads"] = post_threads(caption, img_url, threads_token)
-    else:
-        results["threads"] = post_threads(caption, None, threads_token)
+    # Threads (publik, TEXT only - image Drive gak bisa di-fetch Meta)
+    results["threads"] = post_threads(caption, None, threads_token)
 
     try:
         mark_published(prod["product_id"])
