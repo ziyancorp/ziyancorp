@@ -171,21 +171,30 @@ def main():
     print(f"[AGENT] Aset: {len(photos)} foto, {len(videos)} video")
 
     # Download aset asli
+    fb_page_id = os.environ.get("FB_PAGE_ID", "975723622288353")
+    fb_token = os.environ.get("FB_PAGE_TOKEN", "")
     photo_local = download_asset(gw, photos[0]["drive_url"], "photo.jpg") if photos else None
     video_local = download_asset(gw, videos[0]["drive_url"], "video.mp4") if videos else None
     img_url = None
     if photo_local:
-        # upload ke hosting publik? IG/Threads butuh URL, bukan file lokal.
-        # pakai picsum kalau gak ada hosting. Tapi Bos mau asli -> upload ke Drive publik link.
-        # Simple: pakai drive_url langsung (sudah public? cek). Kalau gak, fallback picsum.
-        img_url = photos[0]["drive_url"].replace("view?usp=drivesdk","view").replace("?usp=drivesdk","")
-    print(f"[AGENT] Photo: {photo_local}, Video: {video_local}")
+        # Upload foto asli ke FB Page -> dapet CDN URL (IG bisa fetch)
+        try:
+            import requests as _req
+            _r = _req.post(f"https://graph.facebook.com/v20.0/{fb_page_id}/photos",
+                           files={"source": open(photo_local, "rb")},
+                           data={"published": "false", "access_token": fb_token}, timeout=30)
+            if _r.status_code == 200:
+                _pid = _r.json().get("id")
+                _r2 = _req.get(f"https://graph.facebook.com/v20.0/{_pid}",
+                               params={"fields": "source", "access_token": fb_token}, timeout=15)
+                img_url = _r2.json().get("source")
+        except Exception as e:
+            print(f"[AGENT] WARN upload foto ke FB gagal: {e}")
+    print(f"[AGENT] Photo: {photo_local}, Video: {video_local}, img_url: {img_url}")
 
     caption = build_caption(prod, affiliate)
     print(f"[AGENT] Caption:\n{caption}\n")
 
-    fb_page_id = os.environ.get("FB_PAGE_ID", "975723622288353")
-    fb_token = os.environ.get("FB_PAGE_TOKEN", "")
     # Threads: pakai THREADS_USER_TOKEN (valid), BUKAN META_USER_TOKEN (expired)
     threads_token = os.environ.get("THREADS_USER_TOKEN", "")
     # IG: butuh token IG terpisah (instagram_token expired) -> skip kalau gak ada

@@ -96,12 +96,13 @@ def post_facebook(caption: str, page_id: str, page_token: str) -> dict:
 
 
 def post_instagram(caption: str, image_url: str, ig_id: str, access_token: str) -> dict:
-    """Post gambar + caption ke Instagram Business Account via Meta Graph API."""
+    """Post gambar + caption ke Instagram via Instagram Graph API (graph.instagram.com).
+    Token dari Instagram Login (bukan FB Graph) -> endpoint graph.instagram.com."""
     if not image_url:
         return {"status": "skipped", "reason": "image_url_required"}
     
-    # 1. Create Media Container
-    container_url = f"https://graph.facebook.com/v20.0/{ig_id}/media"
+    # 1. Create Media Container (graph.instagram.com)
+    container_url = f"https://graph.instagram.com/v20.0/{ig_id}/media"
     res1 = requests.post(container_url, data={
         "caption": caption,
         "image_url": image_url,
@@ -112,8 +113,8 @@ def post_instagram(caption: str, image_url: str, ig_id: str, access_token: str) 
     if not creation_id:
         return {"status": "error", "error_container": res1}
     
-    # 2. Publish Media Container
-    publish_url = f"https://graph.facebook.com/v20.0/{ig_id}/media_publish"
+    # 2. Publish Media Container (graph.instagram.com)
+    publish_url = f"https://graph.instagram.com/v20.0/{ig_id}/media_publish"
     res2 = requests.post(publish_url, data={
         "creation_id": creation_id,
         "access_token": access_token
