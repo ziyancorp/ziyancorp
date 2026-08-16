@@ -42,6 +42,29 @@ def get_products_latest(limit=1):
         if len(out) >= limit: break
     return out
 
+def get_pending_product():
+    """Ambil 1 produk yang BELUM dipost (kolom J status != PUBLISHED)."""
+    s = Cfg.from_env()
+    gw = GoogleWorkspace(s.google_credentials_file, s.google_token_file,
+                         s.google_root_folder_id, s.google_spreadsheet_id)
+    res = gw.sheets.spreadsheets().values().get(
+        spreadsheetId=s.google_spreadsheet_id, range="PRODUCT_MASTER!A2:J").execute()
+    rows = res.get("values", [])
+    for r in reversed(rows):  # dari terbaru
+        if len(r) > 0 and r[0]:
+            status = r[9] if len(r) > 9 else ""
+            if status != "PUBLISHED":
+                return {
+                    "product_id": r[0],
+                    "title": r[1] if len(r) > 1 else "",
+                    "description": r[2] if len(r) > 2 else "",
+                    "shopee_url": r[3] if len(r) > 3 else "",
+                    "tiktok_url": r[4] if len(r) > 4 else "",
+                    "other_links": r[5] if len(r) > 5 else "",
+                    "folder_url": r[6] if len(r) > 6 else "",
+                }
+    return None
+
 def get_affiliate_json(gw, product_id):
     """Cari folder produk di Drive, baca AFFILIATE.json -> return dict."""
     root = gw.root_folder_id
@@ -154,11 +177,11 @@ def post_youtube_public(title, desc, video_path):
         return {"status":"error","error":str(e)}
 
 def main():
-    prods = get_products_latest(limit=1)
-    if not prods:
-        return {"status":"no_product","msg":"Sheet kosong"}
-    prod = prods[0]
-    print(f"[AGENT] Produk: {prod['product_id']}")
+    prod = get_pending_product()
+    if not prod:
+        print("[AGENT] Tidak ada produk pending. Skip.")
+        return {"status":"no_pending","msg":"Semua produk sudah PUBLISHED"}
+    print(f"[AGENT] Produk pending: {prod['product_id']}")
 
     # Baca AFFILIATE.json dari Drive
     s = Cfg.from_env()
