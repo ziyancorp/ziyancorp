@@ -144,7 +144,7 @@ def post_youtube_public(title, desc, video_path):
             "--file", video_path, "--title", title, "--description", desc,
             "--privacy", "public", "--client", client, "--token", tok,
             "--expected-channel", expected],
-            capture_output=True, text=True, timeout=180, cwd=str(ROOT))
+            capture_output=True, text=True, timeout=600, cwd=str(ROOT))
         if "UPLOAD_OK" in out.stdout:
             for line in out.stdout.splitlines():
                 if line.startswith("URL="): return {"status":"success","url":line.split("=",1)[1]}
@@ -213,7 +213,13 @@ def main():
         results["instagram"] = {"status":"skipped","reason":"no_image"}
     # YouTube (publik, video asli)
     if video_local:
-        results["youtube"] = post_youtube_public(prod["title"], caption, video_local)
+        yt_title = (prod.get("title") or f"Produk {prod['product_id']}").strip()
+        if len(yt_title) > 95:
+            yt_title = yt_title[:95].rsplit(" ", 1)[0] + "..."
+        # Description YT: sederhana (hindari reject YT)
+        shopee = prod.get("shopee_url") or (affiliate or {}).get("shopee_url", "")
+        yt_desc = f"Produk fashion ZIYAN.\n\nBeli di Shopee: {shopee}" if shopee else "Produk fashion ZIYAN."
+        results["youtube"] = post_youtube_public(yt_title, yt_desc, video_local)
     else:
         results["youtube"] = {"status":"skipped","reason":"no_video"}
     # Threads (publik, TEXT only - image Drive gak bisa di-fetch Meta)

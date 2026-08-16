@@ -50,6 +50,7 @@ def resumable_upload(insert_request, max_retries: int) -> dict:
             if response is not None and "id" not in response:
                 raise RuntimeError(f"Response upload tidak memiliki video ID: {response}")
         except HttpError as exc:
+            print(f"HTTP_ERROR {exc.resp.status}: {exc.content.decode()[:300]}")
             if exc.resp.status not in RETRIABLE_STATUS_CODES:
                 raise
             retry += 1
